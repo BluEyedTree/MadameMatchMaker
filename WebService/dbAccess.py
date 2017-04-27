@@ -1,5 +1,14 @@
 import sqlite3 as sql
 
+'''
+Converts the standard format of sqlLite queries into the following
+Standard sqlLite format:
+[("Email1","item1"),("Email2","item1")]
+The format of this web service:
+Email1;item1,Email2,item1
+The tuples are seperated with a semi colon while the tuples are seperated with a comma
+
+'''
 
 def format(inputList):
 	outputList =[]
@@ -15,6 +24,10 @@ def format(inputList):
 			outputList.append(",")
 	return "".join(outputList)
 
+
+'''
+Removes repeated elements that may be returned if multiple requests are made to the same person.
+'''
 def deleteRepeats(inputList):
 	userList = []
 	userAct = {}
@@ -146,6 +159,19 @@ def addNewActivity(activityName):
 			return "Success"	
 		else:
 			return "Error: " +str(activityName)+" is already in the table"
+
+'''
+Returns a string of each activity seperated by a comma
+'''
+
+
+def getActivities():
+	with sql.connect("MM.db") as con:
+			cur = con.cursor()
+			queryString = "select ActivityDescription from Activity;"
+			result = cur.execute(queryString)
+			return format(result.fetchall())
+
 
 def numberUsers():
 	with sql.connect("MM.db") as con:

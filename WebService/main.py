@@ -93,8 +93,12 @@ def requestMatch(EmailRequester,EmailDesired,activityDescription):
 
 @app.route('/addNewActivity/<activityDescription>')
 def NewActivity(activityDescription):
-	return addNewActivity(str(activityDescription)) 
-		
+	return addNewActivity(str(activityDescription))
+
+@app.route('/getActivities/')
+def getActivity():
+	return getActivities()
+
 
 @app.route('/numberUsers')
 def numUsers():
