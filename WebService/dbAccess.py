@@ -1,6 +1,42 @@
 import sqlite3 as sql
 
 
+def format(inputList):
+	outputList =[]
+	counter = 0
+	lenList = len(inputList)
+	for Tuple in inputList:
+		counter+=1
+		for tupleItem in Tuple:
+			outputList.append(tupleItem)
+			if(Tuple.index(tupleItem) != len(Tuple)-1):
+				outputList.append(";")
+		if(counter<lenList):
+			outputList.append(",")
+	return "".join(outputList)
+
+def deleteRepeats(inputList):
+	userList = []
+	userAct = {}
+	outputList = []
+	outOutList = []# Creates the correct dictionary of values
+	for Tuple in inputList:
+		if (Tuple[0] not in userList):
+			userList.append(Tuple[0])
+			userAct[Tuple[0]] = [Tuple[1]]
+		elif(Tuple[1] not in userAct[Tuple[0]]):
+			userAct[Tuple[0]].append(Tuple[1])
+
+# Converts the dictionary into a list
+	for key in userAct:
+		outputList.append(key)
+	for item in userAct[key]:
+		outputList.append(item)
+	outOutList.append(tuple(outputList))
+	outputList = []
+
+	return outOutList
+
 
 '''
 Checks to see if the given input, exists within that column of a given table.
@@ -65,7 +101,7 @@ def getMatches(eMail):
 		with sql.connect("MM.db") as con:
 			cur = con.cursor()
 			result = cur.execute(queryString)
-			return str(result.fetchall())
+			return format(deleteRepeats(result.fetchall()))
 	else:
 		return "ERROR: User Not in Table"
 		
