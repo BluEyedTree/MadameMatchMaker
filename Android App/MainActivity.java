@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //The idea is to use this method with your built strings to interact with the web service
+        //For example: "http://172.16.12.163:5000/Users"
 
          private String sendGet(String inputURL) throws Exception {
          String USER_AGENT = "Mozilla/5.0";
