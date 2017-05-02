@@ -99,10 +99,18 @@ def NewActivity(activityDescription):
 def getActivity():
 	return getActivities()
 
-
 @app.route('/numberUsers')
 def numUsers():
 	return str(numberUsers())
+
+@app.route('/deleteFromTable/<rowItemToDelete>/<table>/<column>')
+def Delete(rowItemToDelete,table,column):
+	toDelete = str(rowItemToDelete)
+	tableName = str(table)
+	colName = str(column)
+	return str(deleteFromTable(toDelete,tableName,colName))
+
+
 		
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

@@ -73,6 +73,26 @@ def isInTable(input,table,column):
 			return False
 
 '''
+Deletes the row that contains input within the column of table. 
+'''
+def deleteFromTable(input,table,column):
+	input = str(input)
+	tableName = str(table)
+	columnName = str(column)
+	buildCommand = "delete from " + tableName + " " + "where " + tableName + "." + columnName + " =="
+	toAdd = " \"" + str(input) + "\""
+	buildCommand +=  toAdd
+
+	with sql.connect("MM.db") as con:
+		cur = con.cursor()
+		if(isInTable(input,table,column)):
+			cur.execute(buildCommand)
+			return "Success"	
+		else:
+			return "Error: That entry is not within the table "+ tableName
+			
+
+'''
 Adds a new user to the Users table. 
 Because of poor databse design the email will also be the username
 !!! Add email verifcation !!!
