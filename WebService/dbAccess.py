@@ -1,5 +1,6 @@
 import sqlite3 as sql
 
+#comment test
 '''
 Converts the standard format of sqlLite queries into the following
 Standard sqlLite format:
