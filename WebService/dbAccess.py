@@ -7,7 +7,7 @@ Standard sqlLite format:
 The format of this web service:
 Email1;item1,Email2,item1
 The tuples are seperated with a semi colon while the tuples are seperated with a comma
-
+Mainly used for getActivities Function
 '''
 
 def format(inputList):
@@ -25,33 +25,7 @@ def format(inputList):
 	return "".join(outputList)
 
 
-'''
-Removes repeated elements that may be returned if multiple requests are made to the same person.
-'''
 
-'''
-def deleteRepeats(inputList):
-	userList = []
-	userAct = {}
-	outputList = []
-	outOutList = []# Creates the correct dictionary of values
-	for Tuple in inputList:
-		if (Tuple[0] not in userList):
-			userList.append(Tuple[0])
-			userAct[Tuple[0]] = [Tuple[1]]
-		elif(Tuple[1] not in userAct[Tuple[0]]):
-			userAct[Tuple[0]].append(Tuple[1])
-
-# Converts the dictionary into a list
-	for key in userAct:
-		outputList.append(key)
-	for item in userAct[key]:
-		outputList.append(item)
-	outOutList.append(tuple(outputList))
-	outputList = []
-
-	return outOutList
-'''
 
 '''
 Checks to see if a row already exists that contains: eMailRequester,eMailDesired,activityDescription 
@@ -160,7 +134,7 @@ def getMatches(eMail):
 		with sql.connect("MM.db") as con:
 			cur = con.cursor()
 			result = cur.execute(queryString)
-			return str(result.fetchall())
+			return formatterForGetMatches(result.fetchall())
 	else:
 		return "ERROR: User Not in Table"
 '''
@@ -212,7 +186,49 @@ def requestNewMatch(eMailRequester,eMailDesired,activityDescription):
 			return "Success"	
 	else:
 		return "ERROR: User Not in User Table"
+'''
+Converts the output query into an easier to understand format
+Example:
+
+Email;Act1;Act2&Email2;Act1;Act2;Act3...
+
+'''
+
 		
+def formatterForGetMatches(inputQuery):
+  
+  def dictionaryFromatter(inputQuery):
+    adic ={}
+    for tup in inputQuery:
+      if(tup not in adic):
+        adic[tup[0]]=[]
+  
+    for tup in inputQuery:
+      for k in adic:
+        if(tup[0]==k):
+          adic[k].append(tup[1])
+    return adic
+  
+  inDic = dictionaryFromatter(inputQuery)
+  
+  formatList = []
+  KCounter = 0
+  for k in inDic:
+      formatList.append(k)
+      formatList.append(";")
+      lLength = len(inDic[k])
+      for i in range(0,lLength):
+        formatList.append(inDic[k][i])
+        if(i==lLength-1):
+          formatList.append("&")
+        else:
+          formatList.append(";")
+  formatList = "".join(formatList)    
+  formatList = formatList[:-1]
+  return(formatList)  
+  
+
+
 
 def getActivityID(ActivityDescription):
 	if(isInTable(ActivityDescription,"Activity","ActivityDescription")):
