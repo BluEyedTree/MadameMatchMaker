@@ -53,12 +53,6 @@ def deleteRepeats(inputList):
 	return outOutList
 '''
 
-
-def deleteRepeats():
-	with sql.connect("MM.db") as con:
-		cur = con.cursor()
-		result = cur.execute("select * from Interest")
-		return print(result.fetchall())
 '''
 Checks to see if a row already exists that contains: eMailRequester,eMailDesired,activityDescription 
 
@@ -205,7 +199,12 @@ def requestNewMatch(eMailRequester,eMailDesired,activityDescription):
 	else:
 		return "ERROR: Activity Description not in Activity Table"	
 	
+	if(not notInInterestTable(eMailRequester,eMailDesired,activityDescription)):
+		return "Error: Entry already is in Interest Table"
+	
+	
 	if(isInTable(eMailRequester,"Users","Email")):
+		
 		with sql.connect("MM.db") as con:
 			cur = con.cursor()
 			cur.execute("INSERT INTO Interest (Emailp,InterestEmail,ActivityID) VALUES (?,?,?)", (eMailRequester,eMailDesired,activityID))
