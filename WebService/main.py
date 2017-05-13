@@ -110,7 +110,13 @@ def Delete(rowItemToDelete,table,column):
 	colName = str(column)
 	return str(deleteFromTable(toDelete,tableName,colName))
 
+''''
+Used for debuging should prob be removed for the final copy
+'''
 
+@app.route('/check')
+def check():
+	return str(deleteRepeats())
 		
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

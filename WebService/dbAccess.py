@@ -1,6 +1,5 @@
 import sqlite3 as sql
 
-#comment test
 '''
 Converts the standard format of sqlLite queries into the following
 Standard sqlLite format:
@@ -29,6 +28,8 @@ def format(inputList):
 '''
 Removes repeated elements that may be returned if multiple requests are made to the same person.
 '''
+
+'''
 def deleteRepeats(inputList):
 	userList = []
 	userAct = {}
@@ -50,7 +51,37 @@ def deleteRepeats(inputList):
 	outputList = []
 
 	return outOutList
+'''
 
+
+def deleteRepeats():
+	with sql.connect("MM.db") as con:
+		cur = con.cursor()
+		result = cur.execute("select * from Interest")
+		return print(result.fetchall())
+'''
+Checks to see if a row already exists that contains: eMailRequester,eMailDesired,activityDescription 
+
+select *
+from Interest
+where Interest.Emailp = "Thomas.Bekman12@ncf.edu" && Interest.InterestEmail = "Cora.Coleman14@ncf.edu" && Interest.ActivityID=2;
+
+FINISH ME ADD Proper SQL query, see if fetchall greater than one.
+Then do correct query for match
+'''
+def IsInInsertTable(eMailRequester,eMailDesired,activityDescription):
+	requesterEmail = str(eMailRequester)
+	eMailDesire = str(eMailDesired)
+	activityID = getActivityID(activityDescription)
+	with sql.connect("MM.db") as con:
+		cur = con.cursor()
+		buildCommand = "select * from Interest where Interest.Emailp == \""+ str(eMailRequester)+ "\""+" and Interest.InterestEmail == \"" + str(eMailDesire) + "\" and Interest.ActivityID="+ "\""+ activityID+ "\"" + ";"
+		result = cur.execute(buildCommand)	
+		
+		if(len(result.fetchall())>0):
+			return True
+		else:
+			return False
 
 '''
 Checks to see if the given input, exists within that column of a given table.
@@ -135,10 +166,38 @@ def getMatches(eMail):
 		with sql.connect("MM.db") as con:
 			cur = con.cursor()
 			result = cur.execute(queryString)
-			return format(deleteRepeats(result.fetchall()))
+			return str(result.fetchall())
 	else:
 		return "ERROR: User Not in Table"
-		
+'''
+Determines if the row defined by: eMailRequester,eMailDesired,activityDescription
+Actually exists within the Interest table
+True returned if that row does not exist in the table
+False returned if that row is in the Interest Table
+'''
+
+def notInInterestTable(eMailRequester,eMailDesired,activityDescription):
+	requesterEmail = str(eMailRequester)
+	eMailDesire = str(eMailDesired)
+	activityID = getActivityID(activityDescription)
+	if(activityID == "ERROR: Activity not in the table"): #Ensures the activity exists within the activity table
+		return "ERROR: " + str(activityDescription) + " is not in the activity table"
+	with sql.connect("MM.db") as con:
+        	cur = con.cursor()
+        	result = cur.execute("select * from Interest")
+        	all = result.fetchall()
+	isNotIn = True 
+	for item in all:
+		if(requesterEmail == item[1] and eMailDesire == item[2] and activityID == item[3]):
+			isNotIn = False
+	return isNotIn
+
+
+'''
+-Add verifcation that emailRequester is in the table
+-Use notInInterestTable to ensure your not adding repeated elements
+
+'''
 	
 def requestNewMatch(eMailRequester,eMailDesired,activityDescription):
 	if(str(getActivityID(activityDescription))[0] != "E"):#Ensures it didn't return an error
@@ -200,6 +259,4 @@ def numberUsers():
 			queryString = "SELECT COUNT(Email) FROM Users;"
 			result = cur.execute(queryString)
 			return result.fetchall()[0][0]
-
-
 
