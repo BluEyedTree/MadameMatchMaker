@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,7 +32,11 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                try {
+                    signup();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -43,8 +49,8 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void signup() {
-        Log.d(TAG, "Signup");
+    public void signup() throws ExecutionException, InterruptedException {
+        Log.i("TAG", "Signup");
 
         if (!validate()) {
             onSignupFailed();
@@ -62,8 +68,16 @@ public class SignupActivity extends AppCompatActivity {
         //String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+        Log.i("Tag", "MOM?");
+            // TODO: Implement your own signup logic here.
+            //GetPage task = new GetPage();
+            //String apiString = "http://172.16.12.163:5000/Register/";
+            //apiString += email;
+            //apiString += "/";
+            //apiString += password;
+            //task.execute(apiString).get();
 
-        // TODO: Implement your own signup logic here.
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
