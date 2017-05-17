@@ -1,8 +1,9 @@
 package atomapp.httpclienttest2;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -10,12 +11,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+         Log.i("TAG", "FUCK");
           StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
           StrictMode.setThreadPolicy(policy);
           initializeElements();
@@ -63,16 +65,17 @@ public class MainActivity extends AppCompatActivity {
          }
 
 
-         private void initializeElements() {
+         private void initializeElements(){
+         Log.i("TAG", "InititializeElements");
          TextView display = (TextView) findViewById(R.id.testView);
          display.setText("damn");
 
          try {
-         String test = sendGet("http://172.16.12.163:5000/Users");
-         display.setText(test);
+         String test = sendGet("http://10.0.0.24/Users");
+         Log.i("TAG", test);
          }
          catch(Exception e){
-         display.setText(e.toString());
+             Log.i("TAG", e.toString());
 
          }
          }

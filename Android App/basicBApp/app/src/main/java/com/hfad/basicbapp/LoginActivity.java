@@ -2,10 +2,8 @@ package com.hfad.basicbapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +13,6 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -100,6 +96,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
+               /**
+                GetPage task = new GetPage();
+                try {
+                    String test = task.execute(new String[] {"http://172.16.11.22:5000/Users"}).get();
+                    Log.i("TEST", test);
+                }
+                catch(Exception e){
+                    Log.i(TAG, "Failed");
+                    //display.setText(e.toString());
+
+                }
+                **/
                 this.finish();
             }
         }

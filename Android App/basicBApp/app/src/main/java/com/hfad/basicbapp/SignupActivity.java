@@ -11,24 +11,23 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     //@BindView(R.id.input_name) EditText _nameText;
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_signup) Button _signupButton;
-    @BindView(R.id.link_login) TextView _loginLink;
+      EditText _emailText;
+      EditText _passwordText;
+      Button _signupButton;
+      TextView _loginLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-
+        initializeElements();
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,21 +42,31 @@ public class SignupActivity extends AppCompatActivity {
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("TAT", "Test2");
                 // Finish the registration screen and return to the Login activity
                 finish();
             }
         });
     }
 
-    public void signup() throws ExecutionException, InterruptedException {
-        Log.i("TAG", "Signup");
+    private void initializeElements(){
+        _emailText = (EditText)findViewById(R.id.input_email);
+        _passwordText = (EditText)findViewById(R.id.input_password);
+        _signupButton = (Button)findViewById(R.id.btn_signup);
+        _loginLink = (TextView)findViewById(R.id.link_login);
+    }
 
+    public void signup() throws ExecutionException, InterruptedException {
+        Log.i("TAT", "Signup");
+/**
         if (!validate()) {
             onSignupFailed();
+            Log.i("TAG", "ValidationError");
             return;
         }
-
+**/
         _signupButton.setEnabled(false);
+
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme);
@@ -68,14 +77,7 @@ public class SignupActivity extends AppCompatActivity {
         //String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-        Log.i("Tag", "MOM?");
-            // TODO: Implement your own signup logic here.
-            //GetPage task = new GetPage();
-            //String apiString = "http://172.16.12.163:5000/Register/";
-            //apiString += email;
-            //apiString += "/";
-            //apiString += password;
-            //task.execute(apiString).get();
+
 
 
 
@@ -94,6 +96,22 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
+
+        GetPage task = new GetPage();
+        try {
+
+            String test = task.execute(new String[] {"http://172.16.11.22:5000/Users"}).get();
+            Log.i("TAT", test);
+            Log.i("Pass",_passwordText.getText().toString());
+            Log.i("User",_emailText.getText().toString());
+
+
+        }
+        catch(Exception e){
+            Log.i("TAT", "Failed");
+            //display.setText(e.toString());
+
+        }
         setResult(RESULT_OK, null);
         finish();
     }
