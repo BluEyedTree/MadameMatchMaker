@@ -8,15 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.concurrent.ExecutionException;
-
 import butterknife.ButterKnife;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignupActivity";
 
-    //@BindView(R.id.input_name) EditText _nameText;
       EditText _emailText;
       EditText _passwordText;
       Button _signupButton;
@@ -28,33 +25,9 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
         initializeElements();
-        _signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    signup();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        _loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("TAT", "Test2");
-                // Finish the registration screen and return to the Login activity
-                finish();
-            }
-        });
+        setOnClickListeners();
     }
 
-    private void initializeElements(){
-        _emailText = (EditText)findViewById(R.id.input_email);
-        _passwordText = (EditText)findViewById(R.id.input_password);
-        _signupButton = (Button)findViewById(R.id.btn_signup);
-        _loginLink = (TextView)findViewById(R.id.link_login);
-    }
 
     public void signup() throws ExecutionException, InterruptedException {
         Log.i("TAT", "Signup");
@@ -67,9 +40,9 @@ public class SignupActivity extends AppCompatActivity {
 **/
         _signupButton.setEnabled(false);
 
+        // informing the user of the account creation process upon the signup button click.
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.AppTheme);
+        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
@@ -113,7 +86,7 @@ public class SignupActivity extends AppCompatActivity {
 
         }
         setResult(RESULT_OK, null);
-        finish();
+        //finish();
     }
 
     public void onSignupFailed() {
@@ -151,5 +124,38 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    // this method sets onclick listeners to the elements in the layout. called in onCreate.
+
+    private void initializeElements(){
+        _emailText = (EditText)findViewById(R.id.input_email);
+        _passwordText = (EditText)findViewById(R.id.input_password);
+        _signupButton = (Button)findViewById(R.id.btn_signup);
+        _loginLink = (TextView)findViewById(R.id.link_login);
+    }
+
+    private void setOnClickListeners(){
+        _signupButton.setOnClickListener(this);
+        _loginLink.setOnClickListener(this);
+    }
+
+    //overriding the onCLick method from the interface that is implemented in the class declaration.
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.btn_signup:
+                try {
+                    signup();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.link_login:
+                finish();
+                break;
+        }
     }
 }
