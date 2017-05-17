@@ -152,4 +152,13 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String passwordFromSignup = getIntent().getStringExtra("passwordToLogin");
+        //OZAN WAS WORKING HERE
+
+
+    }
 }

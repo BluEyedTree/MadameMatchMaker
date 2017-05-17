@@ -17,7 +17,8 @@ import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignupActivity";
-
+      String password;
+      String email;
       EditText _emailText;
       EditText _passwordText;
       Button _signupButton;
@@ -76,13 +77,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         GetPage task = new GetPage();
         try {
-            String password = _passwordText.getText().toString();
-            String eMail = _emailText.getText().toString();
-            Log.i("TAT", "http://172.16.11.22:5000/Register/"+eMail+"/"+password);
-            String test = task.execute(new String[] {"http://172.16.11.22:5000/Register/"+eMail+"/"+password}).get();
+
+            Log.i("TAT", "http://172.16.11.22:5000/Register/"+email+"/"+password);
+            String test = task.execute(new String[] {"http://172.16.11.22:5000/Register/"+email+"/"+password}).get();
             Log.i("TAT", test);
-            Log.i("Pass",_passwordText.getText().toString());
-            Log.i("User",_emailText.getText().toString());
+            Log.i("Pass",password);
+            Log.i("User",email);
 
 
         }
@@ -93,6 +93,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
         setResult(RESULT_OK, null);
         Intent backToLogin = new Intent(this,LoginActivity.class);
+        backToLogin.putExtra("passwordToLogin",password);
+        backToLogin.putExtra("emailToLogin",email);
         startActivity(backToLogin);
     }
 
@@ -104,11 +106,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public boolean validate() {
         boolean valid = true;
-
-        //String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
         /*if (name.isEmpty() || name.length() < 3) {
             _nameText.setError("at least 3 characters");
             valid = false;
@@ -140,6 +137,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         _passwordText = (EditText)findViewById(R.id.input_password);
         _signupButton = (Button)findViewById(R.id.btn_signup);
         _loginLink = (TextView)findViewById(R.id.link_login);
+        email = _emailText.getText().toString();
+        password = _passwordText.getText().toString();
     }
 
     private void setOnClickListeners(){
