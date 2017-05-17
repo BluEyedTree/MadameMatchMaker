@@ -1,5 +1,7 @@
 package com.hfad.basicbapp;
+
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.concurrent.ExecutionException;
+
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
@@ -72,8 +76,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         GetPage task = new GetPage();
         try {
-
-            String test = task.execute(new String[] {"http://172.16.11.22:5000/Users"}).get();
+            String password = _passwordText.getText().toString();
+            String eMail = _emailText.getText().toString();
+            Log.i("TAT", "http://172.16.11.22:5000/Register/"+eMail+"/"+password);
+            String test = task.execute(new String[] {"http://172.16.11.22:5000/Register/"+eMail+"/"+password}).get();
             Log.i("TAT", test);
             Log.i("Pass",_passwordText.getText().toString());
             Log.i("User",_emailText.getText().toString());
@@ -86,7 +92,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         setResult(RESULT_OK, null);
-        //finish();
+        Intent backToLogin = new Intent(this,LoginActivity.class);
+        startActivity(backToLogin);
     }
 
     public void onSignupFailed() {
