@@ -11,10 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -22,41 +19,17 @@ public class LoginActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
 
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
+    EditText _emailText;
+    EditText _passwordText;
+    Button _loginButton;
+    TextView _signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-
-        _loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                login();
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                //Grabbing the username to display in the Menu activity
-                String email = _emailText.getText().toString();
-                String password = _passwordText.getText().toString();
-                //Starting the Menu activity
-                intent.putExtra(EXTRA_MESSAGE, email);
-                startActivity(intent);
-            }
-        });
-
-        _signupLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //Starting the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-            }
-        });
+        initializeElements();
+        setListeners();
     }
 
     public void login() {
@@ -153,12 +126,53 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
+
+    // if it's invoked by signup activity, it's gonna display the data user plugged in.
+
+    private void initializeElements(){
+        _emailText = (EditText)findViewById(R.id.input_email_login);
+        _passwordText = (EditText)findViewById(R.id.input_password_login);
+        _loginButton = (Button)findViewById(R.id.btn_login_login);
+        _signupLink = (TextView) findViewById(R.id.link_signup_login);
+    }
+
+    private void setListeners(){
+        _loginButton.setOnClickListener(this);
+        _signupLink.setOnClickListener(this);
+    }
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        String passwordFromSignup = getIntent().getStringExtra("passwordToLogin");
-        //OZAN WAS WORKING HERE
+    protected void onRestart() {
+        Log.i("onResume","Has been run");
+        super.onRestart();
+        Intent startedThis = getIntent();
+        String passwordFromSignup = startedThis.getExtras().getString("passwordToLogin");
+        String emailFromSignup  = startedThis.getExtras().getString("emailToLogin");
 
 
+        _emailText.setText(passwordFromSignup);
+        _passwordText.setText(emailFromSignup);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.btn_login_login:
+                login();
+                Intent toMenuActivity = new Intent(getApplicationContext(), MenuActivity.class);
+                //Grabbing the username to display in the Menu activity
+                String email = _emailText.getText().toString();
+                String password = _passwordText.getText().toString();
+                //Starting the Menu activity
+                toMenuActivity.putExtra(EXTRA_MESSAGE, email);
+                startActivity(toMenuActivity);
+                break;
+            case R.id.link_signup_login:
+                //Starting the Signup activity
+                Intent toSignupActivity = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(toSignupActivity, REQUEST_SIGNUP);
+                break;
+        }
     }
 }

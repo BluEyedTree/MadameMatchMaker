@@ -28,7 +28,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.bind(this);
         initializeElements();
         setOnClickListeners();
     }
@@ -92,7 +91,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         setResult(RESULT_OK, null);
-        Intent backToLogin = new Intent(this,LoginActivity.class);
+
+        // passing the email and password data back to login activity.
+        Intent backToLogin = new Intent(this,LoginActivity.class); //explicit intent.
         backToLogin.putExtra("passwordToLogin",password);
         backToLogin.putExtra("emailToLogin",email);
         startActivity(backToLogin);
@@ -133,10 +134,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     // this method sets onclick listeners to the elements in the layout. called in onCreate.
 
     private void initializeElements(){
-        _emailText = (EditText)findViewById(R.id.input_email);
-        _passwordText = (EditText)findViewById(R.id.input_password);
-        _signupButton = (Button)findViewById(R.id.btn_signup);
-        _loginLink = (TextView)findViewById(R.id.link_login);
+        _emailText = (EditText)findViewById(R.id.input_email_signup);
+        _passwordText = (EditText)findViewById(R.id.input_password_signup);
+        _signupButton = (Button)findViewById(R.id.btn_signup_signup);
+        _loginLink = (TextView)findViewById(R.id.link_login_signup);
         email = _emailText.getText().toString();
         password = _passwordText.getText().toString();
     }
@@ -150,7 +151,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.btn_signup:
+            case R.id.btn_signup_signup:
                 try {
                     signup();
                 } catch (ExecutionException e) {
@@ -159,7 +160,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
                 break;
-            case R.id.link_login:
+            case R.id.link_login_signup:
                 finish();
                 break;
         }
