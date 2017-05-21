@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".LoginFail"></activity>
+        <activity android:name=".LoginFail" />
+        <activity android:name=".ViewMatches"></activity>
     </application>
 
 </manifest>
