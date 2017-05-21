@@ -34,6 +34,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void login() {
         Log.d(TAG, "Login");
+        String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+        if(validate()){
+            GetPage task = new GetPage();
+            try {
+
+                String test = task.execute(new String[] {"http://172.16.11.22:5000/login/"+email+"/"+password}).get();
+                if(test == "True"){
+                    User.setEmail(email);
+                }
+                else{
+                    onLoginFailed();
+                    return;
+                }
+
+                Log.i("TAT", test);
+                Log.i("Pass",password);
+                Log.i("User",email);
+
+
+            }
+            catch(Exception e){
+                Log.i("TAT", "Failed");
+                //display.setText(e.toString());
+
+            }
+        }
 
         if (!validate()) {
             onLoginFailed();
