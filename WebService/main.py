@@ -3,7 +3,9 @@ import sqlite3 as sql
 from flask import Flask, request
 from dbAccess import *
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application
+
 
 
 
@@ -128,7 +130,7 @@ def check():
 	return str(deleteRepeats())
 		
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0')
 
 
 
