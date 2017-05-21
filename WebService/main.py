@@ -61,6 +61,15 @@ def register(Email,Password):
 	pPassword = str(Password)
 	return Register(eEmail,pPassword)
 
+
+@app.route('/login/<Email>/<Password>')
+def lgin(Email,Password):
+	eEmail = str(Email)
+	pPassword = str(Password)
+	return login(eEmail,pPassword)
+
+
+
 '''
 Example Usage
 /changePassword/Thomas.Bekman12@ncf.edu/newPass
