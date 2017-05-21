@@ -72,6 +72,32 @@ def isInTable(input,table,column):
 		else:
 			return False
 
+
+def login(Email,Password):
+
+
+	buildCommand = "select " +"Email" +" from " + "Users" + " " + "where " + "Users" + "." + "Password" + " =="
+	toAdd = " \"" + str(Password) + "\""
+	buildCommand +=  toAdd
+	toAdd = " and " + "Users.Email ==" + " \"" + str(Email) + "\""
+	buildCommand +=  toAdd
+	
+	with sql.connect("MM.db") as con:
+		cur = con.cursor()
+		result = cur.execute(buildCommand)	
+		if(len(result.fetchall())>0):
+			return str("True")
+		else:
+			return str("False")
+	
+'''
+TEST SHIT
+'''
+print(login('Cora.Coleman14@ncf.edu','Cora')) #Should return TRUE
+print(login('sadas','ssadas')) #Should return False
+
+
+
 '''
 Deletes the row that contains input within the column of table. 
 '''
