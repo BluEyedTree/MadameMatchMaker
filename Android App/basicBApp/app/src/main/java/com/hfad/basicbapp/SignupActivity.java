@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignupActivity";
+    private static final int REQUEST_LOGIN = 0;
       public String password;
       public String email;
       EditText _emailText;
@@ -163,7 +164,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.link_login_signup:
-                finish();
+                Intent toLogin = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivityForResult(toLogin, REQUEST_LOGIN);
+                //finish();
                 break;
         }
     }
