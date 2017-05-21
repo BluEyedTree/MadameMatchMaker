@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-import butterknife.ButterKnife;
-
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignupActivity";
-      String password;
-      String email;
+      public String password;
+      public String email;
       EditText _emailText;
       EditText _passwordText;
       Button _signupButton;
@@ -73,15 +71,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
-
+        String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
         GetPage task = new GetPage();
         try {
 
-            Log.i("TAT", "http://172.16.11.22:5000/Register/"+email+"/"+password);
-            String test = task.execute(new String[] {"http://172.16.11.22:5000/Register/"+email+"/"+password}).get();
+            //Log.i("TAT", "http://172.16.15.255:5000/");
+            String BuildString = "http://10.0.2.2:5000/Register/"+email+"/"+password;
+
+            Log.i("TAT", BuildString);
+            String test = task.execute(new String[] {BuildString}).get();
             Log.i("TAT", test);
-            Log.i("Pass",password);
-            Log.i("User",email);
+            //Log.i("Pass",password);
+            //Log.i("User",email);
 
 
         }

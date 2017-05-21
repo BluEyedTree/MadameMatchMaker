@@ -58,7 +58,7 @@ public class GetPage extends AsyncTask<String, Void, String> {
             return Output;
         }
         catch(Exception e){
-            return "FAILED";
+            return "Caught_Exception_FAILED";
 
         }
     }

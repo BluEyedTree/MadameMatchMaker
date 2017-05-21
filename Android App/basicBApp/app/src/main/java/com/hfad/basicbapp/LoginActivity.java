@@ -32,21 +32,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setListeners();
     }
 
+
     public void login() {
-        Log.d(TAG, "Login");
+        Log.i("TAG", "Login");
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-        if(validate()){
+
             GetPage task = new GetPage();
             try {
-
-                String test = task.execute(new String[] {"http://172.16.11.22:5000/login/"+email+"/"+password}).get();
-                if(test == "True"){
+                String BuildString = "http://10.0.2.2:5000/login/"+email+"/"+password;
+                Log.i("TAT", BuildString);
+                String test = task.execute(new String[] {BuildString}).get();
+                Log.i("TAT", test);
+                Log.i("TAT", test.toString());
+                if(test.equalsIgnoreCase("True")){
+                    Log.i("TAT", "DidIt");
                     User.setEmail(email);
+                    //onLoginSuccess();
+
                 }
                 else{
                     onLoginFailed();
-                    return;
+
                 }
 
                 Log.i("TAT", test);
@@ -60,12 +67,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //display.setText(e.toString());
 
             }
-        }
 
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        }
+
+
 
         _loginButton.setEnabled(true);
 
@@ -125,7 +129,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void onLoginFailed() {
+        //Intent backToLogin = new Intent(this, LoginFail.class);
+        //startActivity(backToLogin);
+
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        //Intent backToLogin = new Intent(this, LoginFail.class);
+        //startActivity(backToLogin);
 
         _loginButton.setEnabled(true);
     }
