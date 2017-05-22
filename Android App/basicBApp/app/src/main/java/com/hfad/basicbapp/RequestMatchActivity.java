@@ -1,5 +1,6 @@
 package com.hfad.basicbapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class RequestMatchActivity extends AppCompatActivity {
     EditText emailRequested;
     Button requestMatch;
     CheckBox checkBox1,checkBox2,checkBox3,checkBox4;
+    TextView SignOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,7 @@ public class RequestMatchActivity extends AppCompatActivity {
         checkBox2 = (CheckBox)findViewById(R.id.activity2);
         checkBox3 = (CheckBox)findViewById(R.id.activity3);
         checkBox4 = (CheckBox)findViewById(R.id.activity4);
-
+        SignOut = (TextView)findViewById(R.id.signOut);
     }
     private void setOnClickListener(){
         requestMatch.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +53,14 @@ public class RequestMatchActivity extends AppCompatActivity {
                 emailRequested.setText(" ");
             }
         });
+        SignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backToLoginPage = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(backToLoginPage);
+            }
+        });
+
     }
     private String[] getActivitiesChoosen(){
         List<String> activities = new ArrayList<String>();

@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
     Button requestMatchTest;
     Button viewMatch;
+    TextView signOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private void initializeElements(){
         requestMatchTest = (Button)findViewById(R.id.toRequestMatchActivity);
         viewMatch = (Button)findViewById(R.id.viewMatchesButton);
+        signOut  = (TextView)findViewById(R.id.signMeOut);
     }
 
     // setting onClickListeners for buttons.
@@ -44,7 +46,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private void setListeners(){
         viewMatch.setOnClickListener(this);
         requestMatchTest.setOnClickListener(this);
-
+        signOut.setOnClickListener(this);
     }
 
     // defines the button functionality.
@@ -58,6 +60,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.toRequestMatchActivity:
                 Intent toRequestIntent = new Intent(this,RequestMatchActivity.class);
                 startActivity(toRequestIntent);
+                break;
+            case R.id.signMeOut:
+                Intent backToLogin = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(backToLogin);
                 break;
         }
     }
