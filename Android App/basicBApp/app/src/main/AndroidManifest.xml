@@ -20,7 +20,9 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginFail" />
-        <activity android:name=".ViewMatches"></activity>
+        <activity android:name=".ViewMatches"/>
+        <activity android:name=".RequestMatchActivity"/>
+
     </application>
 
 </manifest>

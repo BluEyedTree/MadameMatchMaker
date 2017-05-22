@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
-    Button requestMatch;
+    Button requestMatchTest;
     Button viewMatch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     // initializing the view elements.
     private void initializeElements(){
-        requestMatch = (Button)findViewById(R.id.requestMatchButton);
+        requestMatchTest = (Button)findViewById(R.id.toRequestMatchActivity);
         viewMatch = (Button)findViewById(R.id.viewMatchesButton);
     }
 
@@ -43,7 +43,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setListeners(){
         viewMatch.setOnClickListener(this);
-        //requestMatch.setOnClickListener(this);
+        requestMatchTest.setOnClickListener(this);
+
     }
 
     // defines the button functionality.
@@ -54,9 +55,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 Intent toViewMatches = new Intent(this,ViewMatches.class);
                 startActivity(toViewMatches);
                 break;
-            case R.id.requestMatchButton:
-                Intent toViewMatches1 = new Intent(this,ViewMatches.class);
-                startActivity(toViewMatches1);
+            case R.id.toRequestMatchActivity:
+                Intent toRequestIntent = new Intent(this,RequestMatchActivity.class);
+                startActivity(toRequestIntent);
                 break;
         }
     }
