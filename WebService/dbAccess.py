@@ -89,13 +89,6 @@ def login(Email,Password):
 			return str("True")
 		else:
 			return str("False")
-	
-'''
-TEST SHIT
-'''
-print(login('Cora.Coleman14@ncf.edu','Cora')) #Should return TRUE
-print(login('sadas','ssadas')) #Should return False
-
 
 
 '''
