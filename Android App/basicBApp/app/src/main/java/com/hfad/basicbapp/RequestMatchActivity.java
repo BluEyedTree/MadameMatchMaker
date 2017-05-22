@@ -75,7 +75,11 @@ public class RequestMatchActivity extends AppCompatActivity {
         return  arrayToBeReturned;
     }
 
+    public String removeSpaces(String inputString){
 
+        String outString = inputString.replaceAll(" ","%20");
+        return outString;
+    }
 
 
     public void addRequestToDatabase(String eMailRequester, String eMailDesired, String[] activies){
@@ -83,7 +87,7 @@ public class RequestMatchActivity extends AppCompatActivity {
         for(String activity: activies) {
             ///requestNewMatch/<EmailRequester>/<EmailDesired>/<activityDescription>'
             try {
-                String BuildString = "http://10.0.2.2:5000/requestNewMatch/" + eMailRequester + "/" + eMailDesired+"/"+activity;
+                String BuildString = "http://10.0.2.2:5000/requestNewMatch/" + eMailRequester + "/" + eMailDesired+"/"+removeSpaces(activity);
                 Log.i("TAT", BuildString);
                 String test = task.execute(new String[]{BuildString}).get();
                 Log.i("TAT", test);
