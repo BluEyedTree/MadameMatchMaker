@@ -84,8 +84,9 @@ public class RequestMatchActivity extends AppCompatActivity {
 
 
     public void addRequestToDatabase(String eMailRequester, String eMailDesired, String[] activies){
-        GetPage task = new GetPage();
+
         for(String activity: activies) {
+            GetPage task = new GetPage();
             ///requestNewMatch/<EmailRequester>/<EmailDesired>/<activityDescription>'
             try {
                 String BuildString = "http://10.0.2.2:5000/requestNewMatch/" + eMailRequester + "/" + eMailDesired+"/"+removeSpaces(activity);
