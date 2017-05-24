@@ -57,6 +57,7 @@ public class RequestMatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent backToLoginPage = new Intent(getApplicationContext(),LoginActivity.class);
+                User.setEmail("");
                 startActivity(backToLoginPage);
             }
         });

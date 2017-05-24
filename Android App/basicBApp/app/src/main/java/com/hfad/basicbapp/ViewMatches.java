@@ -29,6 +29,7 @@ public class ViewMatches extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent backToLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                User.setEmail("");
                 startActivity(backToLogin);
             }
         });
